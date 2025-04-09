@@ -91,7 +91,6 @@ export default function App() {
             data.map((item, index) => {
               const isTop = index === 0 && menuNum === 1;
               const Row = isTop ? HighlightedRow : Tr;
-              console.log(isTop);
               return (
                 <Row key={index}>
                   <Td
