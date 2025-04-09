@@ -14,8 +14,8 @@ export default function Inquiry() {
 
     try {
       await emailjs.sendForm(
-        process.env.NEXT_SERVICE_KEY,
-        process.env.NEXT_TEMPLATE_KEY,
+        process.env.NEXT_PUBLIC_SERVICE_KEY,
+        process.env.NEXT_PUBLIC_TEMPLATE_KEY,
         form.current,
         process.env.NEXT_PUBLIC_KEY
       );
