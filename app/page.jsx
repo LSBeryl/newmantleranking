@@ -34,7 +34,7 @@ export default function App() {
     }, 500);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [menuNum]);
 
   useEffect(() => {
     async function fetchData() {
