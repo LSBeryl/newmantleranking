@@ -29,7 +29,7 @@ export default function Inquiry() {
   return (
     <Wrapper>
       <TopBar>
-        <BackButton onClick={() => router.push("/")}>← 홈으로</BackButton>
+        <BackButton onClick={() => router.push("/")}>&lt; 메인으로</BackButton>
       </TopBar>
 
       <Titles>
@@ -81,16 +81,10 @@ const TopBar = styled.div`
 const BackButton = styled.button`
   background: none;
   border: none;
-  font-size: 1rem;
   cursor: pointer;
   color: #333;
   padding: 0.5rem 0;
   transition: all 0.2s ease;
-
-  &:hover {
-    color: #000;
-    text-decoration: underline;
-  }
 `;
 
 const Titles = styled.div`
@@ -102,8 +96,8 @@ const Titles = styled.div`
   text-align: center;
 `;
 
-const Title = styled.h1`
-  font-size: 2rem;
+const Title = styled.h2`
+  font-size: 1.5rem;
   font-weight: bold;
   margin: 0;
 
@@ -115,9 +109,10 @@ const Title = styled.h1`
 const Subtitle = styled.p`
   line-height: 1.4;
   color: #555;
+  font-size: 0.8rem;
 
   @media (max-width: 768px) {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
   }
 `;
 
@@ -140,9 +135,10 @@ const MessageContainer = styled.div`
     min-width: 80px;
     font-weight: 500;
     margin-top: 0.3rem;
+    font-size: 0.8rem;
 
     @media (max-width: 768px) {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       min-width: 70px;
     }
   }
@@ -160,13 +156,13 @@ const Message = styled.textarea`
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  /* background: #f5f5f5; */
-  font-size: 1rem;
+  font-size: 0.9rem;
   outline: none;
   color: #1f1f1f;
+  font-family: Arial, Helvetica, sans-serif;
 
   @media (max-width: 768px) {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 `;
 
@@ -177,15 +173,15 @@ const ButtonCon = styled.div`
 
 const Button = styled.input`
   width: fit-content;
-  min-width: 130px;
-  height: 3rem;
-  padding: 0 1.5rem;
+  /* min-width: 100px; */
+  /* height: 3rem; */
+  padding: 0.5rem 1rem;
   border: none;
   border-radius: 5px;
   background: #f0f0f0;
   border: 1px solid #d7d7d7;
   color: #1f1f1f;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   cursor: pointer;
 
   &:hover {
