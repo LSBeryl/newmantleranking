@@ -16,13 +16,24 @@ export default function App() {
 
   const cache = useRef({}); // menuNum별 캐시
 
+  const dataRef = useRef(data);
+  useEffect(() => {
+    dataRef.current = data; // 최신값 유지
+  }, [data]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       const curTime = new Date();
-      if (data.length === 0 && curTime - mountTime >= 10000) {
+      const elapsed = curTime - mountTime;
+      const isTimeout = elapsed >= 10000;
+      const isDataEmpty = dataRef.current.length === 0;
+
+      if (isTimeout && isDataEmpty) {
         setIsDamned(true);
       }
-    }, 10);
+    }, 500);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
