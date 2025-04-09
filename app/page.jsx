@@ -163,6 +163,14 @@ export default function App() {
       </MenuCon>
       <Footer>
         <Link href="/inquiry">문의하기</Link>
+        <Link
+          href="/policy"
+          css={css`
+            font-weight: bold;
+          `}
+        >
+          개인정보처리방침
+        </Link>
       </Footer>
     </Wrapper>
   );
@@ -238,6 +246,9 @@ const Menu = styled.li`
 `;
 
 const Footer = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
   margin-top: 2rem;
   padding: 1rem 0;
   font-size: 0.85rem;

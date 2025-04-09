@@ -4,6 +4,7 @@ import emailjs from "@emailjs/browser";
 import { useRef } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Inquiry() {
   const form = useRef();
@@ -36,6 +37,11 @@ export default function Inquiry() {
         <Title>문의 및 건의 사항</Title>
         <Subtitle>
           서비스에 대한 궁금한 점, 제안하고 싶은 내용을 자유롭게 남겨주세요.
+          <br />
+          문의에 대한 답변이 필요한 경우, 답변을 받을 수신 이메일 주소를 함께
+          작성해 주세요. 이메일을 작성하여 보내는 경우,{" "}
+          <Link href="/policy">개인정보처리방침</Link>에 동의한 것으로
+          간주합니다.
         </Subtitle>
       </Titles>
 
