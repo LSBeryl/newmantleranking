@@ -67,7 +67,7 @@ export default function App() {
       >
         {new Date().toISOString().split("T")[0]} 기준
       </div>
-      {isDamned && (
+      {/* {isDamned && (
         <div
           css={css`
             margin: 0.5rem 0;
@@ -77,7 +77,7 @@ export default function App() {
         >
           앗! 서버가 터졌나봐요! 잠시 후에 다시 시도해주세요.
         </div>
-      )}
+      )} */}
       <Table>
         <thead>
           <tr>
