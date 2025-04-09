@@ -27,6 +27,8 @@ export async function GET(_, { params }) {
   const { num } = await params;
   const start = (num - 1) * 100;
 
+  console.log(getToday());
+
   try {
     // 힌트 요청 (안전하게)
     const hintResults = await Promise.allSettled(
