@@ -11,13 +11,19 @@ export default function App() {
   const [data, setData] = useState([]);
   const [menuNum, setMenuNum] = useState(1);
   const [showAns, setShowAns] = useState(false);
+  const [isDamned, setIsDamned] = useState(false);
+  const [mountTime, _] = useState(new Date());
 
   const cache = useRef({}); // menuNum별 캐시
 
   useEffect(() => {
-    console.log(menuNum, showAns);
-    // setMenuNum(1);
-  });
+    const interval = setInterval(() => {
+      const curTime = new Date();
+      if (data.length === 0 && curTime - mountTime >= 10000) {
+        setIsDamned(true);
+      }
+    }, 10);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -50,6 +56,17 @@ export default function App() {
       >
         {new Date().toISOString().split("T")[0]} 기준
       </div>
+      {isDamned && (
+        <div
+          css={css`
+            margin: 0.5rem 0;
+            font-size: 0.8rem;
+            color: #d00000;
+          `}
+        >
+          앗! 서버가 터졌나봐요! 잠시 후에 다시 시도해주세요.
+        </div>
+      )}
       <Table>
         <thead>
           <tr>
