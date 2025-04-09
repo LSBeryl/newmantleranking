@@ -3,7 +3,7 @@
 
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, use } from "react";
 import axios from "axios";
 import Link from "next/link";
 
@@ -11,8 +11,7 @@ export default function App() {
   const [data, setData] = useState([]);
   const [menuNum, setMenuNum] = useState(1);
   const [showAns, setShowAns] = useState(false);
-  const [isDamned, setIsDamned] = useState(false);
-  const [mountTime, _] = useState(new Date());
+  const [today, setToday] = useState(null);
 
   const cache = useRef({}); // menuNum별 캐시
 
@@ -20,21 +19,6 @@ export default function App() {
   useEffect(() => {
     dataRef.current = data; // 최신값 유지
   }, [data]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const curTime = new Date();
-      const elapsed = curTime - mountTime;
-      const isTimeout = elapsed >= 10000;
-      const isDataEmpty = dataRef.current.length === 0;
-
-      if (isTimeout && isDataEmpty) {
-        setIsDamned(true);
-      }
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, [menuNum]);
 
   useEffect(() => {
     async function fetchData() {
@@ -57,6 +41,19 @@ export default function App() {
     fetchData();
   }, [menuNum]);
 
+  useEffect(() => {
+    setToday(() => {
+      const curDate = new Date();
+      const year = curDate.getFullYear();
+      const month = curDate.getMonth() + 1;
+      const date = curDate.getDate();
+      return `${year}-${String(month).padStart(2, "0")}-${String(date).padStart(
+        2,
+        "0"
+      )}`;
+    });
+  }, []);
+
   return (
     <Wrapper>
       <h2>뉴맨틀 - 단어 랭킹</h2>
@@ -65,19 +62,8 @@ export default function App() {
           font-size: 0.8rem;
         `}
       >
-        {new Date().toISOString().split("T")[0]} 기준
+        {today} 기준
       </div>
-      {/* {isDamned && (
-        <div
-          css={css`
-            margin: 0.5rem 0;
-            font-size: 0.8rem;
-            color: #d00000;
-          `}
-        >
-          앗! 서버가 터졌나봐요! 잠시 후에 다시 시도해주세요.
-        </div>
-      )} */}
       <Table>
         <thead>
           <tr>

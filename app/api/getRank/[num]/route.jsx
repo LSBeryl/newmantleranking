@@ -1,21 +1,31 @@
 import axios from "axios";
 
+function getToday() {
+  const curDate = new Date();
+  const year = curDate.getFullYear();
+  const month = curDate.getMonth() + 1;
+  const date = curDate.getDate();
+  return `${year}-${String(month).padStart(2, "0")}-${String(date).padStart(
+    2,
+    "0"
+  )}`;
+}
+
 async function getHint(index) {
-  const date = new Date().toISOString().split("T")[0];
+  const date = getToday();
   const res = await axios.get(`${process.env.NEXT_HINT_URL}${date}/${index}`);
   return res.data;
 }
 
 async function getGuess(word) {
-  const date = new Date().toISOString().split("T")[0];
+  const date = getToday();
   const res = await axios.get(`${process.env.NEXT_GUESS_URL}${date}/${word}`);
   return res.data;
 }
 
-export async function GET(request, { params }) {
-  const { num } = params;
+export async function GET(_, { params }) {
+  const { num } = await params;
   const start = (num - 1) * 100;
-  const end = num * 100;
 
   try {
     // 힌트 요청 (안전하게)
@@ -26,7 +36,7 @@ export async function GET(request, { params }) {
     const validHints = hintResults
       .map((res, i) => {
         if (res.status === "fulfilled") return res.value;
-        console.error(`❌ getHint 실패 - index ${start + i}`, res.reason);
+        console.error(`getHint 실패 - index ${start + i}`, res.reason);
         return null;
       })
       .filter(Boolean);
@@ -40,7 +50,7 @@ export async function GET(request, { params }) {
       .map((res, i) => {
         if (res.status === "fulfilled") return res.value;
         console.error(
-          `❌ getGuess 실패 - word: ${validHints[i].word}`,
+          `getGuess 실패 - word: ${validHints[i].word}`,
           res.reason
         );
         return null;
