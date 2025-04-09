@@ -1,10 +1,13 @@
 import axios from "axios";
 
-function getToday() {
-  const curDate = new Date();
-  const year = curDate.getFullYear();
-  const month = curDate.getMonth() + 1;
-  const date = curDate.getDate();
+function getTodayKST() {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+  const kst = new Date(utc + 9 * 60 * 60 * 1000); // KST = UTC + 9
+
+  const year = kst.getFullYear();
+  const month = kst.getMonth() + 1;
+  const date = kst.getDate();
   return `${year}-${String(month).padStart(2, "0")}-${String(date).padStart(
     2,
     "0"
@@ -12,13 +15,13 @@ function getToday() {
 }
 
 async function getHint(index) {
-  const date = getToday();
+  const date = getTodayKST();
   const res = await axios.get(`${process.env.NEXT_HINT_URL}${date}/${index}`);
   return res.data;
 }
 
 async function getGuess(word) {
-  const date = getToday();
+  const date = getTodayKST();
   const res = await axios.get(`${process.env.NEXT_GUESS_URL}${date}/${word}`);
   return res.data;
 }
@@ -26,8 +29,6 @@ async function getGuess(word) {
 export async function GET(_, { params }) {
   const { num } = await params;
   const start = (num - 1) * 100;
-
-  console.log(getToday());
 
   try {
     // 힌트 요청 (안전하게)
